@@ -3,3 +3,6 @@
 - MNIST: Modified National Institute of Standards and Technology dataset ([Papers With Code](https://paperswithcode.com/dataset/mnist))
 - CNN: Convolutional Neural Network model ([Stanford cheatsheet](https://stanford.edu/~shervine/teaching/cs-230/cheatsheet-convolutional-neural-networks))
 
+## TODO
+- [ ] Demo live predictions
+- [ ] Show wrong predictions
