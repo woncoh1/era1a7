@@ -1,5 +1,6 @@
 
 import torch
+from tqdm.auto import tqdm
 
 
 def train_step(
