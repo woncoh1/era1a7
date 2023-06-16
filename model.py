@@ -1,7 +1,12 @@
+import torch
+import torch.nn as nn
+
+
 def conv( # Convolution layer
-    i: int, # in_channels
-    o: int, # out_channels
-    p: int = 0, # padding
+    i:int, # in_channels
+    o:int, # out_channels
+    p:int=0, # padding
+    d:float=0, # dropout rate
 ) -> nn.Sequential:
     return nn.Sequential(
         # 3x3 convolution to extract features
@@ -16,14 +21,15 @@ def conv( # Convolution layer
         ),
         nn.ReLU(),
         nn.BatchNorm2d(num_features=o),
-        nn.Dropout2d(p=params_model['dropout']),
+        nn.Dropout2d(p=d),
     )
 
 
 def dwsc( # Depthwise separable convolution layer
-    i: int, # in_channels
-    o: int, # out_channels
-    p: int = 0, # padding
+    i:int, # in_channels
+    o:int, # out_channels
+    p:int=0, # padding
+    d:float=0, # dropout rate
 ) -> nn.Sequential:
     # https://www.youtube.com/watch?v=vVaRhZXovbw
     # https://github.com/jmjeon94/MobileNet-Pytorch/blob/master/MobileNetV1.py#L15-L26
@@ -42,7 +48,7 @@ def dwsc( # Depthwise separable convolution layer
         ),
         nn.ReLU(),
         nn.BatchNorm2d(num_features=i),
-        nn.Dropout2d(p=params_model['dropout']),
+        nn.Dropout2d(p=d),
         # Point-wise convolution
         nn.Conv2d(
             in_channels=i,
@@ -54,13 +60,13 @@ def dwsc( # Depthwise separable convolution layer
         ),
         nn.ReLU(),
         nn.BatchNorm2d(num_features=o),
-        nn.Dropout2d(p=params_model['dropout']),
+        nn.Dropout2d(p=d),
     )
 
 
 def tran( # Transition layer = MaxPooling + 1x1 convolution
-    i: int, # in_channels
-    o: int, # out_channels
+    i:int, # in_channels
+    o:int, # out_channels
 ) -> nn.Sequential:
     return nn.Sequential(
         # MaxPooling to reduce the channel size
@@ -78,8 +84,8 @@ def tran( # Transition layer = MaxPooling + 1x1 convolution
 
 
 def last( # Prediction layer = GAP + softmax
-    i: int, # in_channels
-    o: int, # out_channels
+    i:int, # in_channels
+    o:int, # out_channels
 ) -> nn.Sequential:
     return nn.Sequential(
         # [-1, i, s, s]
@@ -188,14 +194,14 @@ class Model2(nn.Module):
 class Model3(nn.Module):
     def __init__(self):
         super().__init__()
-        self.conv1 = conv(1, 16)
-        self.conv2 = dwsc(16, 16)
-        self.conv3 = dwsc(16, 32)
-        self.tran1 = tran(32, 16)
-        self.conv4 = dwsc(16, 16)
-        self.conv5 = dwsc(16, 24)
-        self.conv6 = dwsc(24, 32)
-        self.tran2 = last(32, 10)
+        self.conv1 = conv(1, 16) # n=26, r=3, j=1
+        self.conv2 = dwsc(16, 16) # n=24, r=5, j=1
+        self.conv3 = dwsc(16, 32) # n=22, r=7, j=1
+        self.tran1 = tran(32, 16) # n=11, r=8, j=2
+        self.conv4 = dwsc(16, 16) # n=9, r=12, j=2
+        self.conv5 = dwsc(16, 24) # n=7, r=16, j=2
+        self.conv6 = dwsc(24, 32) # n=5, r=20, j=2
+        self.tran2 = last(32, 10) # n=1, r=28, j=2
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return toolz.pipe(x,
