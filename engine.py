@@ -127,6 +127,7 @@ def find_lr(
     device:torch.device,
     train_loader:torch.utils.data.DataLoader,
     model:torch.nn.Module,
+    criterion:torch.nn.functional,
     optimizer:torch.optim.Optimizer,
     init_value:float=1e-8,
     final_value:float=10.,
