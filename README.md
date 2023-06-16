@@ -3,11 +3,53 @@
 - MNIST: Modified National Institute of Standards and Technology dataset ([Papers With Code](https://paperswithcode.com/dataset/mnist))
 - CNN: Convolutional Neural Network model ([Stanford cheatsheet](https://stanford.edu/~shervine/teaching/cs-230/cheatsheet-convolutional-neural-networks))
 
-## Objective
+## Objectives
 Acheive all of the followings using modular code organization:
 - Test accuracy >= 99.4 % (consistently shown in the last 2 epochs)
 - Number of parameters < 8,000
 - Number of epochs <= 15
+
+## Steps
+1. Setup: application layout
+2. Basic skeleton: fully convolutional neural network with 2 blocks
+3. Model size decrease: [depthwise separable convolution](https://www.youtube.com/watch?v=vVaRhZXovbw)
+4. Model size increase: add more parameters
+5. Data augmentation: image transforms
+6. Learning rate scheduler: [one cycle policy](https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.OneCycleLR.html)
+
+## Results summary
+- Test accuracy
+    - Last: 99.46 % 
+    - Best: 99.48 %
+- Number of Parameters: 4,392
+- Number of Epochs: 15
+
+## Training results
+- Best train accuracy: 99.19 %
+- Best test accuracy: 99.48 %
+
+![image](https://github.com/woncoh1/era1a7/assets/12987758/aa49b8a3-c169-442e-8787-eba67e867064)
+
+## Receptive field
+- r: receptive field size
+- n: channel size
+- j: jump
+- k: kernel size
+- s: stride
+- p: padding
+- conv: convolution layer
+- tran: transition layer
+
+| layer | r_in | n_in | j_in | k | s | p | r_out | n_out | j_out |
+|-------|------|------|------|---|---|---|-------|-------|-------|
+| conv1 |    1 |   28 |    1 | 3 | 1 | 0 |     3 |    26 |     1 |
+| conv2 |    3 |   26 |    1 | 3 | 1 | 0 |     5 |    24 |     1 |
+| conv3 |    5 |   24 |    1 | 3 | 1 | 0 |     7 |    22 |     1 |
+| tran1 |    7 |   22 |    1 | 2 | 2 | 0 |     8 |    11 |     2 |
+| conv4 |    8 |   11 |    2 | 3 | 1 | 0 |    12 |     9 |     2 |
+| conv5 |   12 |    9 |    2 | 3 | 1 | 0 |    16 |     7 |     2 |
+| conv6 |   16 |    7 |    2 | 3 | 1 | 0 |    20 |     5 |     2 |
+| tran2 |   20 |    5 |    2 | 5 | 1 | 0 |    28 |     1 |     2 |
 
 ## Model summary
 ```
@@ -76,10 +118,10 @@ Estimated Total Size (MB): 1.85
 ----------------------------------------------------------------
 ```
 
-## Training results
-- Best train accuracy: 99.19 %
-- Best test accuracy: 99.48 %
-![image](https://github.com/woncoh1/era1a7/assets/12987758/aa49b8a3-c169-442e-8787-eba67e867064)
+## Sample images
+A set of sample images with their corresponding labels from a batch of the training set:
+
+![image](https://github.com/woncoh1/era1a7/assets/12987758/638e026f-075e-49f4-86f4-d0983295d0e9)
 
 ## TODO
 - [ ] Demo live predictions
