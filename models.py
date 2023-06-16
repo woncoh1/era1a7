@@ -111,15 +111,15 @@ def last( # Prediction layer = GAP + softmax
 class Model0(nn.Module):
     def __init__(self):
         super().__init__()
-        self.conv1 = conv(1, 8)
-        self.conv2 = conv(8, 16)
-        self.tran1 = tran(16, 8)
-        self.conv3 = conv(8, 16)
-        self.conv4 = conv(16, 16)
-        self.tran2 = tran(16, 8)
-        self.conv5 = conv(8, 16, p=1)
-        self.conv6 = conv(16, 16, p=1)
-        self.tran3 = last(16, 10)
+        self.conv1 = conv(1, 8) # n=26, r=3, j=1
+        self.conv2 = conv(8, 16) # n=24, r=5, j=1
+        self.tran1 = tran(16, 8) # n=12, r=6, j=2
+        self.conv3 = conv(8, 16) # n=10, r=10, j=2
+        self.conv4 = conv(16, 16) # n=8, r=14, j=2
+        self.tran2 = tran(16, 8) # n=4, r=16, j=4
+        self.conv5 = conv(8, 16, p=1) # n=4, r=24, j=4
+        self.conv6 = conv(16, 16, p=1) # n=4, r=32, j=4
+        self.tran3 = last(16, 10) # n=1, r=44, j=4
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return toolz.pipe(x,
