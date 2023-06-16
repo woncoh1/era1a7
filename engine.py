@@ -10,6 +10,7 @@ def train_step(
     optimizer:torch.optim.Optimizer,
     scheduler:torch.optim.lr_scheduler.LRScheduler,
     epoch:int,
+    onecyclelr:bool=False,
 ) -> tuple[float, float]:
     model.train()
     train_loss = 0
@@ -24,6 +25,7 @@ def train_step(
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
+        if onecyclelr: scheduler.step()
         train_loss += loss.item()
         correct += count_correct_predictions(pred, y)
         processed += len(X)
@@ -33,6 +35,7 @@ def train_step(
             f"Loss = {loss.item():0.4f}, "
             f"Accuracy = {correct/processed:0.2%}"
         ))
+    if not onecyclelr: scheduler.step()
     n = len(loader.dataset)
     train_loss /= n
     train_acc = correct / n
