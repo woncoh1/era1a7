@@ -10,7 +10,7 @@ def train_step(
     optimizer:torch.optim.Optimizer,
     scheduler:torch.optim.lr_scheduler.LRScheduler,
     epoch:int,
-    onecyclelr:bool=False,
+    onecyclelr:bool,
 ) -> tuple[float, float]:
     model.train()
     train_loss = 0
@@ -109,7 +109,6 @@ def train(
             model,
             criterion,
         )
-        scheduler.step()
         results['train_loss'].append(train_loss)
         results['train_acc'].append(train_acc*100)
         results['test_loss'].append(test_loss)
