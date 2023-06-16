@@ -113,7 +113,6 @@ def train(
         results['train_acc'].append(train_acc*100)
         results['test_loss'].append(test_loss)
         results['test_acc'].append(test_acc*100)
-    print('Learning rate =', params_optimizer['lr'])
     return results
 
 
