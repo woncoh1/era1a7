@@ -84,6 +84,7 @@ def train(
     optimizer:torch.optim.Optimizer,
     scheduler:torch.optim.lr_scheduler.LRScheduler,
     epochs:int,
+    onecyclelr:bool=False,
 ) -> dict[str, list[float]]:
     results = {
         'train_loss': [],
@@ -100,6 +101,7 @@ def train(
             optimizer,
             scheduler,
             epoch,
+            onecyclelr=onecyclelr,
         )
         test_loss, test_acc = test_step(
             device,
