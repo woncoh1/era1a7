@@ -25,7 +25,7 @@ git clone https://github.com/woncoh1/era1a7.git
 ```
 And then import the modules in Python:
 ```python
-from era1a7 import data, model, engine, utils
+from era1a7 import data, models, engine, utils
 ```
 
 ## Results summary
