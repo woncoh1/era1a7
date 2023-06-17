@@ -9,13 +9,24 @@ Acheive all of the followings using modular code organization:
 - Number of parameters < 8,000
 - Number of epochs <= 15
 
-## Steps
-1. Setup: application layout
-2. Basic skeleton: fully convolutional neural network with 2 blocks
-3. Model size decrease: [depthwise separable convolution](https://www.youtube.com/watch?v=vVaRhZXovbw)
-4. Model size increase: add more parameters
-5. Data augmentation: image transforms
-6. Learning rate scheduler: [one cycle policy](https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.OneCycleLR.html)
+## Experiments
+In order to reach our goals, we iteratively improve one element at a time:
+1. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/woncoh1/era1a7/blob/main/nbs/S7_01_setup.ipynb) Setup: application layout
+2. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/woncoh1/era1a7/blob/main/nbs/S7_02_skeleton.ipynb) Basic skeleton: fully convolutional neural network
+3. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/woncoh1/era1a7/blob/main/nbs/S7_03_dwsc_small.ipynb) Model size decrease: [depthwise separable convolution](https://www.youtube.com/watch?v=vVaRhZXovbw)
+3. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/woncoh1/era1a7/blob/main/nbs/S7_04_dwsc_big.ipynb) Model size increase: add more parameters
+5. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/woncoh1/era1a7/blob/main/nbs/S7_05_augmentation.ipynb) Data augmentation: image transforms
+6. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/woncoh1/era1a7/blob/main/nbs/S7_06_lr.ipynb) Learning rate scheduler: [one cycle policy](https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.OneCycleLR.html)
+
+## Installation
+If you want to use our models, dataloaders, training engine, and other utilities, please run the following command:
+```console
+git clone https://github.com/woncoh1/era1a7.git
+```
+And then import the modules in Python:
+```python
+from era1a7 import data, model, engine, utils
+```
 
 ## Results summary
 - Test accuracy
