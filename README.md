@@ -63,7 +63,6 @@ from era1a7 import data, models, engine, utils
 | tran2 |   20 |    5 |    2 | 5 | 1 | 0 |    28 |     1 |     2 |
 
 ## Model summary
-`torchinfo.summary` of the final model architecture:
 ```
 ==========================================================================================
 Layer (type (var_name))                  Output Shape              Param #
